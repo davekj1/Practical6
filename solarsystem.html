@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      canvas {
+        border:1px solid #4828ff; /* 1px border around canvas */
+      }
+    </style>
+  </head>
+<body onload="init()">
+  <img src="space.jpg" id="tile" hidden/>
+  <img src="sun.jpg" id="sun" hidden/>
+  <img src="earth.jpg" id="earth" hidden/>
+  <img src="moon.jpg" id="moon" hidden/>
+    <canvas id="Canvas" width="500" height="500" ></canvas>
+    <script>
+  function init(){
+      var canvas = document.getElementById('Canvas');
+      var context = canvas.getContext('2d');
+      
+      var sky = document.getElementById("tile");
+      var earth = document.getElementById("earth");
+      var moon = document.getElementById("moon");
+      var sun = document.getElementById("sun");
+      var centx=canvas.width/2;
+      var centy=canvas.height/2;
+      context.drawImage(sky, 0, 0, 500, 500); 
+
+      context.save();
+      context.translate(centx,centy);
+      context.drawImage(sun,-62,-62, 124, 124); 
+     
+    context.beginPath();
+    context.strokeStyle="rgba(255,255,255,.3)";
+    context.linewidth=2;
+    context.arc(0,0,160,0,2*Math.PI,true);
+    context.stroke();
+
+    var time=new Date;
+    var seconds=time.getSeconds()+time.getMilliseconds()/1000;
+    context.rotate(2*Math.PI/60 * seconds);
+    context.translate(160,0);
+    
+    context.drawImage(earth,-28,-28, 56, 56); 
+
+    context.rotate(2*Math.PI /6*seconds);
+    context.translate(56,0);
+    context.drawImage(moon,-11,-11, 22, 22);
+    context.restore();
+    
+    requestAnimationFrame(init);
+         }
+         init();
+    </script>
+  </body>
+</html>
